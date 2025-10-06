@@ -1,0 +1,15 @@
+region: us
+version: '2'
+# agent:
+authtoken: 2oo50F0F3Rr7DcBMXk1YcxqLkRJ_2qg7qSmi7tLdhmLnmP8X4
+  # api_key: 2oo3RK9GUQCJ7gBWOXXOnuQTbKZ_68YCPiKZWWBR1ooBZUXJA
+tunnels:
+  # twilio-app:
+  #   addr: twilio-app:8001
+  #   proto: http
+  plivo-app:
+    addr: plivo-app:8002
+    proto: http
+  bolna-app:
+    addr: bolna-app:5001
+    proto: http

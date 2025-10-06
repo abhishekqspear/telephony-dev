@@ -1,0 +1,79 @@
+services:
+
+  # ngrok for local tunneling
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    networks:
+      - voice-network
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok-config.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+
+  plivo-app:
+    image: plivo-app:latest
+    networks:
+      - voice-network
+    build:
+      context: .
+      dockerfile: dockerfiles/plivo_server.Dockerfile
+    ports:
+      - "8002:8002"
+    depends_on:
+      # - redis
+      - ngrok
+      # - bolna-app
+    env_file:
+      - .env
+
+
+  # ### Telephony servers ###
+  # twilio-app:
+  #   image: twilio-app:latest
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfiles/twilio_server.Dockerfile
+  #   ports:
+  #     - "8001:8001"
+  #   depends_on:
+  #     - ngrok
+  #   env_file:
+  #     - .env
+  
+  # bolna-app:
+  #   image: bolna-app:latest
+  #   build:
+  #     context: .
+  #     dockerfile: /Users/bowled/Documents/voice/bolna_server.Dockerfile
+  #   ports:
+  #     - "5001:5001"
+  #   depends_on:
+  #     - redis
+  #   env_file:
+  #       - .env
+  #   volumes:
+  #     - ../agent_data:/app/agent_data
+  #     - $HOME/.aws/credentials:/root/.aws/credentials:ro
+  #     - $HOME/.aws/config:/root/.aws/config:ro
+
+  # # redis service used as a persistent storage
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"
+
+# networks: 
+#   my-network: 
+#     driver: bridge
+
+networks:
+  voice-network:
+    external: true
+
+  
