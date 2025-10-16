@@ -59,6 +59,7 @@ jobs:
         run: |
           kustomize edit set image $REGISTRY/$REPOSITORY=$REGISTRY/$REPOSITORY:latest
           kustomize build . | kubectl apply -f -
+          kubectl rollout restart deployment/dolphin-telephony-dev -n beetlelabs-dev
           kubectl rollout status deployment/dolphin-telephony-dev -n beetlelabs-dev
           kubectl get services -o wide
 
