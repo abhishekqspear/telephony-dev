@@ -3,12 +3,13 @@ import json
 import requests
 import uuid
 from dotenv import load_dotenv
-import redis.asyncio as redis
+# import redis.asyncio as redis
 from fastapi import FastAPI, HTTPException, Query, Request,Depends,Header
 from fastapi.responses import PlainTextResponse,JSONResponse
 import plivo
 import urllib.parse
 from datetime import datetime
+from redis.asyncio.cluster import RedisCluster
 
 app = FastAPI()
 load_dotenv()
@@ -21,14 +22,14 @@ plivo_phone_number = os.getenv('PLIVO_PHONE_NUMBER')
 # Initialize Plivo client
 plivo_client = plivo.RestClient(os.getenv('PLIVO_AUTH_ID'), os.getenv('PLIVO_AUTH_TOKEN'))
 
-redis_host="master.voice-config-redis.nv8nnp.aps1.cache.amazonaws.com"
+redis_host="clustercfg.voice-config-redis.hilh9d.aps1.cache.amazonaws.com"
 # redis_host="redis"
 redis_port="6379"
 redis_password="piMfyp-tejkyg-8sarqi"
-
-redis_client = redis.Redis(
+redis_client = RedisCluster(
     host=redis_host,
     port=redis_port,
+    username="redis-user",
     password=redis_password,
     ssl=True,  # Enable SSL if connecting to AWS Elasticache Redis
     decode_responses=True
