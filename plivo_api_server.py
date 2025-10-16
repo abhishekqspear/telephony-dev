@@ -49,7 +49,7 @@ async def get_client_id(authorization):
     
     token = authorization.split(" ")[1] 
 
-    response= requests.get("https://beetlelabs.ai/user-auth/user/me",headers={"Authorization":f"Bearer {token}"})
+    response= requests.get("https://beetlelabs.nyvioai.com/user-auth/user/me",headers={"Authorization":f"Bearer {token}"})
 
     if response.status_code != 200:
         raise Exception(f"Request failed:{response.status_code} {response.text}")
@@ -107,7 +107,7 @@ async def make_call(request: Request,authorization: str = Depends(get_authorizat
             user_id = client_id
 
         # telephony_host, bolna_host = populate_ngrok_tunnels()
-        telephony_host, bolna_host = "https://beetlelabs.ai/telephony","wss://beetlelabs.ai/voice"
+        telephony_host, bolna_host = "https://beetlelabs.nyvioai.com/telephony","wss://beetlelabs.nyvioai.com/voice"
         plivo_answer_url = f"{telephony_host}/plivo_connect?bolna_host={bolna_host}&agent_id={agent_id}&client_id={user_id}"
 
         if call_context is not None:
@@ -247,7 +247,7 @@ def save_record_url(s3_record_url,s3_transcript_url,client_id=None,call_detail_i
     try:
         if(record_data.get("state")=="No Answer" or record_data.get("state")=="Rejected" or record_data.get("state")=="Busy Line" or record_data.get("state")=="Failed"):
             print("Record saved:",record_data)
-            response = requests.post("https://beetlelabs.ai/marketing-ms/records",json=record_data,headers={"Content-Type":"application/json"})
+            response = requests.post("https://beetlelabs.nyvioai.com/marketing-ms/records",json=record_data,headers={"Content-Type":"application/json"})
             print(response.text)
     except Exception as e:
         print(f"Error:{e}")

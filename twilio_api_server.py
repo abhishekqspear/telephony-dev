@@ -61,7 +61,7 @@ async def make_call(request: Request):
             raise HTTPException(status_code=404, detail="Recipient phone number not provided")
 
         telephony_host, bolna_host = populate_ngrok_tunnels()
-        # telephony_host, bolna_host = "https://beetlelabs.ai/telephony","wss://beetlelabs.ai/voice"
+        # telephony_host, bolna_host = "https://beetlelabs.nyvioai.com/telephony","wss://beetlelabs.nyvioai.com/voice"
         # telephony_host, bolna_host = "http://localhost:8001","wss://localhost:5001"
 
         print(f'telephony_host: {telephony_host}')
