@@ -22,7 +22,7 @@ plivo_phone_number = os.getenv('PLIVO_PHONE_NUMBER')
 # Initialize Plivo client
 plivo_client = plivo.RestClient(os.getenv('PLIVO_AUTH_ID'), os.getenv('PLIVO_AUTH_TOKEN'))
 
-redis_host="master.voice-config-redis-micro.hilh9d.aps1.cache.amazonaws.com"
+redis_host="master.voice-config-redis-micro-new.hilh9d.aps1.cache.amazonaws.com"
 # redis_host="redis"
 redis_port="6379"
 redis_password="piMfyp-tejkyg-8sarqi"
